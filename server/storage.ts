@@ -38,7 +38,12 @@ if (!connectionString) {
   throw new Error('DATABASE_URL environment variable is required');
 }
 
-const pool = new Pool({ connectionString });
+const pool = new Pool({
+  connectionString,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 const db = drizzle(pool);
 
 export class PostgresStorage implements IStorage {
