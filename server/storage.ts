@@ -1,134 +1,136 @@
-import { pgTable, text, serial, integer, boolean } from "drizzle-orm/pg-core";
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import { Pool } from '@neondatabase/serverless';
+
+import mongoose from 'mongoose';
 import { 
-  contacts, features, heroContent, testimonials, pricingPlans,
   type Contact, type Feature, type HeroContent, type Testimonial, type PricingPlan,
   type InsertContact, type InsertFeature, type InsertHeroContent, type InsertTestimonial, type InsertPricingPlan
 } from "@shared/schema";
 
-export interface IStorage {
-  // Contact form
-  createContact(contact: InsertContact): Promise<Contact>;
+// MongoDB Schema Definitions
+const heroSchema = new mongoose.Schema({
+  title: String,
+  subtitle: String,
+  ctaText: String,
+  isActive: Boolean
+});
 
-  // CMS Operations
-  // Hero
+const featureSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  order: Number
+});
+
+const testimonialSchema = new mongoose.Schema({
+  name: String,
+  role: String,
+  content: String,
+  imageUrl: String
+});
+
+const pricingPlanSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  features: [String]
+});
+
+const contactSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  message: String
+});
+
+// MongoDB Models
+const Hero = mongoose.model('Hero', heroSchema);
+const Feature = mongoose.model('Feature', featureSchema);
+const Testimonial = mongoose.model('Testimonial', testimonialSchema);
+const PricingPlan = mongoose.model('PricingPlan', pricingPlanSchema);
+const Contact = mongoose.model('Contact', contactSchema);
+
+export interface IStorage {
+  createContact(contact: InsertContact): Promise<Contact>;
   getActiveHeroContent(): Promise<HeroContent | undefined>;
   createHeroContent(content: InsertHeroContent): Promise<HeroContent>;
   updateHeroContent(id: number, content: Partial<InsertHeroContent>): Promise<HeroContent>;
-
-  // Features
   getFeatures(): Promise<Feature[]>;
   createFeature(feature: InsertFeature): Promise<Feature>;
   updateFeature(id: number, feature: Partial<InsertFeature>): Promise<Feature>;
-
-  // Testimonials
   getTestimonials(): Promise<Testimonial[]>;
   createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
   updateTestimonial(id: number, testimonial: Partial<InsertTestimonial>): Promise<Testimonial>;
-
-  // Pricing
   getPricingPlans(): Promise<PricingPlan[]>;
   createPricingPlan(plan: InsertPricingPlan): Promise<PricingPlan>;
   updatePricingPlan(id: number, plan: Partial<InsertPricingPlan>): Promise<PricingPlan>;
 }
 
-const connectionString = process.env.DATABASE_URL;
-if (!connectionString) {
-  throw new Error("DATABASE_URL environment variable is not set");
-}
+// Connect to MongoDB
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/landing-page';
+mongoose.connect(MONGODB_URI);
 
-const pool = new Pool({ 
-  connectionString,
-  connectionTimeoutMillis: 5000,
-  max: 20,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-const db = drizzle(pool);
-
-export class PostgresStorage implements IStorage {
-  // Contact form
+export class MongoDBStorage implements IStorage {
   async createContact(contact: InsertContact): Promise<Contact> {
-    const [newContact] = await db.insert(contacts).values(contact).returning();
-    return newContact;
+    const newContact = await Contact.create(contact);
+    return newContact.toObject();
   }
 
-  // Hero content
   async getActiveHeroContent(): Promise<HeroContent | undefined> {
-    const [content] = await db.select().from(heroContent).where({ isActive: true });
-    return content;
+    const content = await Hero.findOne({ isActive: true });
+    return content?.toObject();
   }
 
   async createHeroContent(content: InsertHeroContent): Promise<HeroContent> {
-    // Set all existing hero content to inactive
-    await db.update(heroContent).set({ isActive: false });
-    const [newContent] = await db.insert(heroContent).values({ ...content, isActive: true }).returning();
-    return newContent;
+    await Hero.updateMany({}, { isActive: false });
+    const newContent = await Hero.create({ ...content, isActive: true });
+    return newContent.toObject();
   }
 
   async updateHeroContent(id: number, content: Partial<InsertHeroContent>): Promise<HeroContent> {
-    const [updated] = await db.update(heroContent)
-      .set(content)
-      .where({ id: id })
-      .returning();
-    return updated;
+    const updated = await Hero.findByIdAndUpdate(id, content, { new: true });
+    return updated?.toObject();
   }
 
-  // Features
   async getFeatures(): Promise<Feature[]> {
-    return await db.select().from(features).orderBy(features.order);
+    const features = await Feature.find().sort('order');
+    return features.map(f => f.toObject());
   }
 
   async createFeature(feature: InsertFeature): Promise<Feature> {
-    const [newFeature] = await db.insert(features).values(feature).returning();
-    return newFeature;
+    const newFeature = await Feature.create(feature);
+    return newFeature.toObject();
   }
 
   async updateFeature(id: number, feature: Partial<InsertFeature>): Promise<Feature> {
-    const [updated] = await db.update(features)
-      .set(feature)
-      .where({ id: id })
-      .returning();
-    return updated;
+    const updated = await Feature.findByIdAndUpdate(id, feature, { new: true });
+    return updated?.toObject();
   }
 
-  // Testimonials
   async getTestimonials(): Promise<Testimonial[]> {
-    return await db.select().from(testimonials);
+    const testimonials = await Testimonial.find();
+    return testimonials.map(t => t.toObject());
   }
 
   async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
-    const [newTestimonial] = await db.insert(testimonials).values(testimonial).returning();
-    return newTestimonial;
+    const newTestimonial = await Testimonial.create(testimonial);
+    return newTestimonial.toObject();
   }
 
   async updateTestimonial(id: number, testimonial: Partial<InsertTestimonial>): Promise<Testimonial> {
-    const [updated] = await db.update(testimonials)
-      .set(testimonial)
-      .where({ id: id })
-      .returning();
-    return updated;
+    const updated = await Testimonial.findByIdAndUpdate(id, testimonial, { new: true });
+    return updated?.toObject();
   }
 
-  // Pricing plans
   async getPricingPlans(): Promise<PricingPlan[]> {
-    return await db.select().from(pricingPlans);
+    const plans = await PricingPlan.find();
+    return plans.map(p => p.toObject());
   }
 
   async createPricingPlan(plan: InsertPricingPlan): Promise<PricingPlan> {
-    const [newPlan] = await db.insert(pricingPlans).values(plan).returning();
-    return newPlan;
+    const newPlan = await PricingPlan.create(plan);
+    return newPlan.toObject();
   }
 
   async updatePricingPlan(id: number, plan: Partial<InsertPricingPlan>): Promise<PricingPlan> {
-    const [updated] = await db.update(pricingPlans)
-      .set(plan)
-      .where({ id: id })
-      .returning();
-    return updated;
+    const updated = await PricingPlan.findByIdAndUpdate(id, plan, { new: true });
+    return updated?.toObject();
   }
 }
 
-export const storage = new PostgresStorage();
+export const storage = new MongoDBStorage();
