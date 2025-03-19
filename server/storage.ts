@@ -38,21 +38,32 @@ if (!connectionString) {
   throw new Error('DATABASE_URL environment variable is required');
 }
 
-import { WebSocket } from 'ws';
-// @ts-ignore
-global.WebSocket = WebSocket;
+const MAX_RETRIES = 5;
+const RETRY_DELAY = 3000;
 
-const pool = new Pool({ 
-  connectionString,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-  connectionTimeoutMillis: 5000
-});
+async function createPool() {
+  let retries = 0;
+  while (retries < MAX_RETRIES) {
+    try {
+      const pool = new Pool({
+        connectionString,
+        ssl: { rejectUnauthorized: false },
+        connectionTimeoutMillis: 5000
+      });
+      await pool.connect();
+      return pool;
+    } catch (err) {
+      retries++;
+      console.error(`Database connection attempt ${retries} failed:`, err);
+      if (retries < MAX_RETRIES) {
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+      }
+    }
+  }
+  throw new Error('Failed to connect to database after multiple retries');
+}
 
-// Test connection
-pool.connect()
-  .then(() => console.log('Database connected successfully'))
-  .catch(err => console.error('Database connection error:', err));
-
+const pool = await createPool();
 const db = drizzle(pool);
 
 export class PostgresStorage implements IStorage {
