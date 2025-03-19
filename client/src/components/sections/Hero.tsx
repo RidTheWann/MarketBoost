@@ -17,15 +17,6 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="inline-block mb-4 px-4 py-1.5 bg-primary/10 backdrop-blur-sm text-primary rounded-full text-sm font-semibold"
-            >
-              ✨ Transform Your Business Today
-            </motion.div>
-
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               Create beautiful
               <span className="relative inline-block mx-2">
