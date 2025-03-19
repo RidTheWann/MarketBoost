@@ -62,19 +62,8 @@ export interface IStorage {
 }
 
 // Connect to MongoDB
-const MONGODB_URI = process.env.MONGODB_URI;
-if (!MONGODB_URI) {
-  throw new Error('Please set MONGODB_URI in environment variables');
-}
-
-mongoose.connect(MONGODB_URI, {
-  serverSelectionTimeoutMS: 5000,
-  socketTimeoutMS: 45000,
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch((err) => {
-  console.error('MongoDB connection error:', err);
-});
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/landing-page';
+mongoose.connect(MONGODB_URI);
 
 export class MongoDBStorage implements IStorage {
   async createContact(contact: InsertContact): Promise<Contact> {
