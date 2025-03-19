@@ -1,135 +1,88 @@
 # Modern Business Landing Page with CMS
 
-A modern, conversion-optimized business landing page template built with React and Tailwind CSS, featuring a sleek dark-themed design with elegant UI interactions and a built-in CMS.
+A modern, conversion-optimized business landing page template with built-in CMS, perfect for agencies, startups, and businesses. Built with React, TypeScript, Tailwind CSS and Express.js.
 
-## Features
+![Preview](preview.png)
 
-- 🎨 Modern Dark Theme Design
-- 📱 Fully Responsive Layout
-- 💻 Built-in CMS for Content Management
-- 🚀 Performance Optimized
-- 🔒 PostgreSQL Database Integration
-- 🛠 Easy to Customize
+## 🌟 Key Features
 
-## Tech Stack
+- Modern Dark Theme Design
+- Fully Responsive Layout  
+- Built-in CMS Dashboard
+- Performance Optimized
+- PostgreSQL Database
+- SEO Friendly
+- Easy Customization
+- API Documentation
 
-- React with TypeScript
-- Tailwind CSS for styling
-- Shadcn UI components
-- Framer Motion for animations
-- PostgreSQL for data storage
-- Express.js backend
-- Drizzle ORM
+## 🛠 Tech Stack
 
-## Getting Started
+- React 18 with TypeScript
+- Tailwind CSS
+- Shadcn UI Components
+- Express.js Backend
+- PostgreSQL + Drizzle ORM
+- Framer Motion Animations
 
-### Prerequisites
+## 📦 Quick Start
 
-- Node.js 18+ installed
-- PostgreSQL database
-
-### Installation
-
-1. Clone the repository
+1. Clone repository
 2. Install dependencies:
 ```bash
 npm install
 ```
 
-3. Set up environment variables:
-Create a `.env` file with:
+3. Set environment variables:
 ```env
 DATABASE_URL=your_postgresql_database_url
 ```
 
-4. Push the database schema:
+4. Initialize database:
 ```bash
 npm run db:push
 ```
 
-5. Start the development server:
+5. Start development server:
 ```bash
 npm run dev
 ```
 
-## CMS Usage
+The app will run on http://localhost:5000
 
-The CMS is accessible at `/admin` and allows you to manage:
+## 🎨 Customization
 
-### Hero Section
-- Edit main heading and subheading
-- Customize button text
-- Toggle visibility
-
-### Features
-- Add/edit feature cards
-- Customize icons and descriptions
-- Reorder features
-
-### Testimonials
-- Manage customer testimonials
-- Upload customer images
-- Edit testimonial content
-
-### Pricing Plans
-- Configure pricing tiers
-- Customize plan features
-- Set popular plan status
-
-## Customization
-
-### Theme Customization
-
+### Theme
 Edit `theme.json` to customize:
-- Primary color
-- Theme variant (vibrant/professional)
+- Color scheme
+- Typography
 - Dark/light mode
 - Border radius
 
-### Component Customization
+### Content
+Access CMS dashboard at `/admin` to manage:
+- Hero section
+- Features
+- Testimonials  
+- Pricing plans
 
-All components are built with Tailwind CSS and can be customized in:
-- `client/src/components/sections/`
-- `client/src/components/layout/`
+## 📚 API Documentation
 
-## Performance Optimization
+### Hero Section
+- GET /api/cms/hero
+- POST /api/cms/hero
 
-The template is optimized for performance with:
-- Image optimization
-- CSS purging
-- Code splitting
-- Dynamic imports
+### Features  
+- GET /api/cms/features
+- POST /api/cms/features
 
-## API Documentation
+### Testimonials
+- GET /api/cms/testimonials  
+- POST /api/cms/testimonials
 
-### Content Management API
+### Pricing
+- GET /api/cms/pricing
+- POST /api/cms/pricing
 
-#### Hero Section
-- `GET /api/cms/hero` - Get active hero content
-- `POST /api/cms/hero` - Create/update hero content
+## 📄 License
 
-#### Features
-- `GET /api/cms/features` - Get all features
-- `POST /api/cms/features` - Create new feature
-
-#### Testimonials
-- `GET /api/cms/testimonials` - Get all testimonials
-- `POST /api/cms/testimonials` - Add new testimonial
-
-#### Pricing
-- `GET /api/cms/pricing` - Get pricing plans
-- `POST /api/cms/pricing` - Create new pricing plan
-
-## Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+[MIT License](LICENSE)
