@@ -38,20 +38,46 @@ if (!connectionString) {
   throw new Error('DATABASE_URL environment variable is required');
 }
 
-const pool = new Pool({
-  connectionString,
-  ssl: {
-    rejectUnauthorized: false
+const MAX_RETRIES = 5;
+const RETRY_DELAY = 3000;
+
+async function createPool() {
+  let retries = 0;
+  while (retries < MAX_RETRIES) {
+    try {
+      const pool = new Pool({
+        connectionString,
+        ssl: { rejectUnauthorized: false },
+        connectionTimeoutMillis: 5000
+      });
+      await pool.connect();
+      return pool;
+    } catch (err) {
+      retries++;
+      console.error(`Database connection attempt ${retries} failed:`, err);
+      if (retries < MAX_RETRIES) {
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+      }
+    }
   }
-});
+  throw new Error('Failed to connect to database after multiple retries');
+}
+
+const pool = await createPool();
 const db = drizzle(pool);
 
 export class PostgresStorage implements IStorage {
   constructor() {
-    // Test database connection
-    pool.connect().catch(err => {
-      console.error('Failed to connect to database:', err);
-    });
+    this.checkConnection();
+  }
+
+  private async checkConnection() {
+    try {
+      await pool.query('SELECT 1');
+    } catch (err) {
+      console.error('Database connection check failed:', err);
+      throw err;
+    }
   }
   // Contact form
   async createContact(contact: InsertContact): Promise<Contact> {

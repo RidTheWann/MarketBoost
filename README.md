@@ -1,30 +1,40 @@
+
 # Modern Business Landing Page with CMS
 
-A modern, conversion-optimized business landing page template with built-in CMS, perfect for agencies, startups, and businesses. Built with React, TypeScript, Tailwind CSS and Express.js.
-
-![Preview](preview.png)
+A production-ready, modern business landing page template with integrated CMS functionality. Perfect for agencies, startups, and businesses looking for a professional web presence.
 
 ## 🌟 Key Features
 
-- Modern Dark Theme Design
-- Fully Responsive Layout  
+- Modern Dark/Light Theme Design
+- Fully Responsive Layout
 - Built-in CMS Dashboard
 - Performance Optimized
-- PostgreSQL Database
+- PostgreSQL Database with Connection Retries
 - SEO Friendly
-- Easy Customization
-- API Documentation
+- Rate Limited API
+- Input Validation
+- TypeScript Support
+- Comprehensive Documentation
 
-## 🛠 Tech Stack
+## 🛡️ Security Features
+
+- Rate Limiting Protection
+- Input Validation
+- SQL Injection Prevention
+- XSS Protection
+- CSRF Protection
+- Secure Database Connection
+
+## 🛠️ Tech Stack
 
 - React 18 with TypeScript
-- Tailwind CSS
-- Shadcn UI Components
+- Tailwind CSS + Shadcn UI
 - Express.js Backend
 - PostgreSQL + Drizzle ORM
 - Framer Motion Animations
+- Zod Validation
 
-## 📦 Quick Start
+## 📦 Installation
 
 1. Clone repository
 2. Install dependencies:
@@ -32,9 +42,12 @@ A modern, conversion-optimized business landing page template with built-in CMS,
 npm install
 ```
 
-3. Set environment variables:
+3. Configure environment variables:
 ```env
 DATABASE_URL=your_postgresql_database_url
+SESSION_SECRET=your_secure_session_secret
+RATE_LIMIT_WINDOW=15 # minutes
+RATE_LIMIT_MAX=100 # requests
 ```
 
 4. Initialize database:
@@ -47,42 +60,64 @@ npm run db:push
 npm run dev
 ```
 
-The app will run on http://localhost:5000
+6. For production:
+```bash
+npm run build
+npm run start
+```
 
-## 🎨 Customization
+## 🔧 Configuration
 
-### Theme
-Edit `theme.json` to customize:
-- Color scheme
-- Typography
-- Dark/light mode
-- Border radius
+### Database
+- Uses PostgreSQL with connection retries
+- Automatic reconnection handling
+- Connection pooling for performance
 
-### Content
-Access CMS dashboard at `/admin` to manage:
-- Hero section
-- Features
-- Testimonials  
-- Pricing plans
+### Security
+- Rate limiting per IP
+- Input validation using Zod
+- Secure session handling
+- CORS configuration
+
+### Performance
+- Code splitting
+- Image optimization
+- Caching strategies
+- Minification
 
 ## 📚 API Documentation
 
-### Hero Section
-- GET /api/cms/hero
-- POST /api/cms/hero
+### Authentication
+- POST /api/auth/login
+- POST /api/auth/logout
+- GET /api/auth/status
 
-### Features  
-- GET /api/cms/features
-- POST /api/cms/features
+### CMS Endpoints
+- GET /api/cms/hero - Get hero section content
+- POST /api/cms/hero - Update hero section
+- GET /api/cms/features - Get features list
+- POST /api/cms/features - Create/update feature
+- GET /api/cms/testimonials - Get testimonials
+- POST /api/cms/testimonials - Add testimonial
+- GET /api/cms/pricing - Get pricing plans
+- POST /api/cms/pricing - Update pricing plans
 
-### Testimonials
-- GET /api/cms/testimonials  
-- POST /api/cms/testimonials
+### Contact Form
+- POST /api/contact - Submit contact form
 
-### Pricing
-- GET /api/cms/pricing
-- POST /api/cms/pricing
+## 🎨 Customization
+
+Detailed documentation in `/docs` folder covers:
+- Theme customization
+- Component styling
+- Layout modifications
+- CMS configuration
+- API integration
 
 ## 📄 License
 
 [MIT License](LICENSE)
+
+## 🤝 Support
+
+For support, contact: support@example.com
