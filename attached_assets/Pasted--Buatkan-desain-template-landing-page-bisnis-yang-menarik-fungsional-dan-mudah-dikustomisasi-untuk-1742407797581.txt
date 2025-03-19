@@ -1,0 +1,76 @@
+"Buatkan desain template landing page bisnis yang menarik, fungsional, dan mudah dikustomisasi untuk berbagai industri seperti startup, UMKM, dan agensi kreatif. Template ini harus fokus pada konversi tinggi, memiliki struktur yang jelas, dan menawarkan UI/UX intuitif dengan bahasa Inggris sebagai default."
+
+1️⃣ Desain Visual
+Tema Minimalis & Profesional:
+Gunakan kombinasi warna modern, contoh: gradien biru-abu atau hijau-mint.
+Hero Section yang Menarik:
+Gambar/ilustrasi besar berkualitas tinggi.
+Headline persuasif + CTA utama (contoh: "Get Started Today" atau "Try for Free").
+Responsif Sepenuhnya:
+Tampilan optimal untuk desktop, tablet, dan mobile.
+Gunakan hamburger menu untuk navigasi mobile-friendly.
+Animasi Halus & Engaging:
+Transisi seperti fade-in, slide-up saat scroll untuk meningkatkan interaksi.
+2️⃣ Struktur Konten (Section Wajib & Opsional)
+Wajib:
+✅ Header: Logo + navigasi simpel.
+✅ Hero Section: Headline kuat, gambar hero, CTA mencolok.
+✅ Fitur Unggulan: 3-4 fitur utama dengan ikon dan deskripsi singkat.
+✅ Testimoni Pelanggan: Slider atau grid untuk meningkatkan kredibilitas.
+✅ Harga/Paket Layanan (jika relevan).
+✅ Formulir Kontak atau Registrasi yang mudah diakses.
+✅ Footer: Link ke media sosial & halaman penting.
+
+Opsional:
+➕ FAQ Section untuk menjawab pertanyaan umum.
+➕ Blog/Artikel Terkait (untuk mendukung SEO).
+➕ Countdown Timer (jika digunakan untuk promosi/event).
+
+3️⃣ Teknis & Performa
+Framework Modern: Gunakan Bootstrap 5 atau Tailwind CSS.
+Kecepatan & Performa:
+✅ Skor PageSpeed ≥ 90 (optimasi gambar, lazy loading, minify CSS/JS).
+✅ Gambar dalam format WebP untuk loading cepat.
+Cross-Browser Compatibility:
+✅ Berjalan lancar di Chrome, Firefox, Safari, dan Edge.
+4️⃣ SEO-Friendly
+Struktur Heading yang Optimal:
+✅ H1 untuk judul utama, H2 untuk section penting.
+Meta Tags Dinamis:
+✅ Title & description bisa dikustomisasi.
+Schema Markup untuk Bisnis Lokal (jika relevan).
+5️⃣ Integrasi (Opsional)
+Formulir: Support Mailchimp atau Google Forms.
+CMS Version: Jika memungkinkan, buat versi WordPress kompatibel dengan Elementor.
+Payment Gateway Placeholder: Stripe/PayPal untuk kemudahan transaksi.
+6️⃣ Konten & Aset
+Gambar Placeholder Berkualitas Tinggi (sumber: Unsplash, Freepik Premium).
+Ikon Vektor (SVG) dari Font Awesome atau Material Icons.
+Teks Dummy yang mudah diganti (Lorem Ipsum → placeholder dengan komentar di kode).
+7️⃣ Dokumentasi & Support
+📌 File README.md: Panduan instalasi & kustomisasi.
+📌 Video Tutorial Singkat (upload ke YouTube/GDrive jika memungkinkan).
+📌 Komentar pada kode untuk memudahkan pengeditan.
+
+8️⃣ Legal & Lisensi
+Lisensi Komersial dengan atribusi (jika perlu).
+Pastikan semua aset bebas royalti (ikon, gambar, font dari sumber terpercaya seperti Unsplash & Freepik Premium).
+9️⃣ Contoh Referensi Desain
+🎯 Webflow Landing Page → (Minimalis, CTA kuat)
+🔹 Slack Landing Page → (Ilustrasi modern, friendly look)
+🛒 Template ThemeForest "Raven – Multipurpose Landing Page"
+
+🎯 Output yang Diharapkan
+📦 File ZIP berisi:
+✅ Kode HTML/CSS/JS terstruktur.
+✅ Folder assets (gambar, ikon, font).
+✅ Dokumentasi lengkap (PDF/README).
+✅ Versi WordPress (jika ada).
+✅ Link demo interaktif (Netlify/Vercel).
+
+✅ Checklist Final
+☑️ Responsif di semua perangkat.
+☑️ Kode bersih & well-commented.
+☑️ SEO-friendly (meta tags, heading, schema).
+☑️ Dokumentasi lengkap & user-friendly.
+☑️ Aset legal & bebas lisensi.
