@@ -33,10 +33,21 @@ export interface IStorage {
   updatePricingPlan(id: number, plan: Partial<InsertPricingPlan>): Promise<PricingPlan>;
 }
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error('DATABASE_URL environment variable is required');
+}
+
+const pool = new Pool({ connectionString });
 const db = drizzle(pool);
 
 export class PostgresStorage implements IStorage {
+  constructor() {
+    // Test database connection
+    pool.connect().catch(err => {
+      console.error('Failed to connect to database:', err);
+    });
+  }
   // Contact form
   async createContact(contact: InsertContact): Promise<Contact> {
     const [newContact] = await db.insert(contacts).values(contact).returning();
