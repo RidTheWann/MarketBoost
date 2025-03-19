@@ -47,8 +47,9 @@ async function createPool() {
     try {
       const pool = new Pool({
         connectionString,
-        ssl: { rejectUnauthorized: false },
-        connectionTimeoutMillis: 5000
+        ssl: true,
+        connectionTimeoutMillis: 5000,
+        wsProxy: (await import('ws')).default // Add WebSocket support
       });
       await pool.connect();
       return pool;
