@@ -5,6 +5,61 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Home, LayoutGrid, Users, DollarSign, Settings } from "lucide-react";
 
+const menuItems = [
+  { href: "/admin", label: "Dashboard", icon: Home },
+  { href: "/admin/hero", label: "Hero", icon: LayoutGrid },
+  { href: "/admin/features", label: "Features", icon: LayoutGrid },
+  { href: "/admin/testimonials", label: "Testimonials", icon: Users },
+  { href: "/admin/pricing", label: "Pricing", icon: DollarSign },
+  { href: "/admin/settings", label: "Settings", icon: Settings },
+];
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const [location] = useLocation();
+
+  return (
+    <Layout>
+      <LayoutHeader className="border-b">
+        <div className="flex h-16 items-center gap-4 px-4">
+          <Link href="/" className="font-bold">
+            Admin Dashboard
+          </Link>
+        </div>
+      </LayoutHeader>
+      
+      <div className="flex">
+        <LayoutSidebar>
+          <ScrollArea className="h-[calc(100vh-4rem)]">
+            <div className="flex flex-col gap-2 p-4">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = location === item.href;
+                return (
+                  <Button
+                    key={item.href}
+                    variant={isActive ? "secondary" : "ghost"}
+                    className="w-full justify-start gap-2"
+                    asChild
+                  >
+                    <Link href={item.href}>
+                      <Icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  </Button>
+                );
+              })}
+            </div>
+          </ScrollArea>
+        </LayoutSidebar>
+
+        <LayoutContent>
+          <div className="p-6">{children}</div>
+        </LayoutContent>
+      </div>
+    </Layout>
+  );
+}
+
 const sidebarItems = [
   { icon: Home, label: "Hero Section", href: "/admin/hero" },
   { icon: LayoutGrid, label: "Features", href: "/admin/features" },
