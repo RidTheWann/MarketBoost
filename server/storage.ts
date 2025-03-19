@@ -38,7 +38,14 @@ if (!connectionString) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-const pool = new Pool({ connectionString });
+const pool = new Pool({ 
+  connectionString,
+  connectionTimeoutMillis: 5000,
+  max: 20,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 const db = drizzle(pool);
 
 export class PostgresStorage implements IStorage {
