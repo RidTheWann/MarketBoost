@@ -17,6 +17,7 @@ function Router() {
         {() => (
           <AdminLayout>
             <Switch>
+              <Route path="/admin" component={AdminHero} />
               <Route path="/admin/hero" component={AdminHero} />
               {/* Add more admin routes here */}
               <Route component={NotFound} />
