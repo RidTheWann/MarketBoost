@@ -9,8 +9,8 @@ const sidebarItems = [
   { icon: Home, label: "Hero Section", href: "/admin/hero" },
   { icon: LayoutGrid, label: "Features", href: "/admin/features" },
   { icon: Users, label: "Testimonials", href: "/admin/testimonials" },
-  { icon: DollarSign, label: "Pricing Plans", href: "/admin/pricing" },
-  { icon: Settings, label: "Settings", href: "/admin/settings" },
+  { icon: DollarSign, label: "Pricing", href: "/admin/pricing" }, // Added Pricing
+  { icon: Settings, label: "Settings", href: "/admin/settings" }, // Added Settings
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
