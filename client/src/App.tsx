@@ -15,24 +15,36 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-
-      {/* Admin Routes */}
-      <Route path="/admin">
-        {() => (
-          <AdminLayout>
-            <Switch>
-              <Route path="/admin" component={AdminHero} />
-              <Route path="/admin/hero" component={AdminHero} />
-              <Route path="/admin/features" component={AdminFeatures} />
-              <Route path="/admin/testimonials" component={AdminTestimonials} />
-              <Route path="/admin/pricing" component={AdminPricing} />
-              <Route path="/admin/settings" component={AdminSettings} />
-              <Route component={NotFound} />
-            </Switch>
-          </AdminLayout>
-        )}
-      </Route>
-
+      <Route path="/admin" component={() => (
+        <AdminLayout>
+          <AdminHero />
+        </AdminLayout>
+      )} />
+      <Route path="/admin/hero" component={() => (
+        <AdminLayout>
+          <AdminHero />
+        </AdminLayout>
+      )} />
+      <Route path="/admin/features" component={() => (
+        <AdminLayout>
+          <AdminFeatures />
+        </AdminLayout>
+      )} />
+      <Route path="/admin/testimonials" component={() => (
+        <AdminLayout>
+          <AdminTestimonials />
+        </AdminLayout>
+      )} />
+      <Route path="/admin/pricing" component={() => (
+        <AdminLayout>
+          <AdminPricing />
+        </AdminLayout>
+      )} />
+      <Route path="/admin/settings" component={() => (
+        <AdminLayout>
+          <AdminSettings />
+        </AdminLayout>
+      )} />
       <Route component={NotFound} />
     </Switch>
   );
