@@ -1,39 +1,122 @@
-import { users, type User, type InsertUser } from "@shared/schema";
-
-// modify the interface with any CRUD methods
-// you might need
+import { pgTable, text, serial, integer, boolean } from "drizzle-orm/pg-core";
+import { drizzle } from 'drizzle-orm/neon-serverless';
+import { Pool } from '@neondatabase/serverless';
+import { 
+  contacts, features, heroContent, testimonials, pricingPlans,
+  type Contact, type Feature, type HeroContent, type Testimonial, type PricingPlan,
+  type InsertContact, type InsertFeature, type InsertHeroContent, type InsertTestimonial, type InsertPricingPlan
+} from "@shared/schema";
 
 export interface IStorage {
-  getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  // Contact form
+  createContact(contact: InsertContact): Promise<Contact>;
+
+  // CMS Operations
+  // Hero
+  getActiveHeroContent(): Promise<HeroContent | undefined>;
+  createHeroContent(content: InsertHeroContent): Promise<HeroContent>;
+  updateHeroContent(id: number, content: Partial<InsertHeroContent>): Promise<HeroContent>;
+
+  // Features
+  getFeatures(): Promise<Feature[]>;
+  createFeature(feature: InsertFeature): Promise<Feature>;
+  updateFeature(id: number, feature: Partial<InsertFeature>): Promise<Feature>;
+
+  // Testimonials
+  getTestimonials(): Promise<Testimonial[]>;
+  createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
+  updateTestimonial(id: number, testimonial: Partial<InsertTestimonial>): Promise<Testimonial>;
+
+  // Pricing
+  getPricingPlans(): Promise<PricingPlan[]>;
+  createPricingPlan(plan: InsertPricingPlan): Promise<PricingPlan>;
+  updatePricingPlan(id: number, plan: Partial<InsertPricingPlan>): Promise<PricingPlan>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  currentId: number;
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const db = drizzle(pool);
 
-  constructor() {
-    this.users = new Map();
-    this.currentId = 1;
+export class PostgresStorage implements IStorage {
+  // Contact form
+  async createContact(contact: InsertContact): Promise<Contact> {
+    const [newContact] = await db.insert(contacts).values(contact).returning();
+    return newContact;
   }
 
-  async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+  // Hero content
+  async getActiveHeroContent(): Promise<HeroContent | undefined> {
+    const [content] = await db.select().from(heroContent).where({ isActive: true });
+    return content;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async createHeroContent(content: InsertHeroContent): Promise<HeroContent> {
+    // Set all existing hero content to inactive
+    await db.update(heroContent).set({ isActive: false });
+    const [newContent] = await db.insert(heroContent).values({ ...content, isActive: true }).returning();
+    return newContent;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.currentId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async updateHeroContent(id: number, content: Partial<InsertHeroContent>): Promise<HeroContent> {
+    const [updated] = await db.update(heroContent)
+      .set(content)
+      .where({ id: id })
+      .returning();
+    return updated;
+  }
+
+  // Features
+  async getFeatures(): Promise<Feature[]> {
+    return await db.select().from(features).orderBy(features.order);
+  }
+
+  async createFeature(feature: InsertFeature): Promise<Feature> {
+    const [newFeature] = await db.insert(features).values(feature).returning();
+    return newFeature;
+  }
+
+  async updateFeature(id: number, feature: Partial<InsertFeature>): Promise<Feature> {
+    const [updated] = await db.update(features)
+      .set(feature)
+      .where({ id: id })
+      .returning();
+    return updated;
+  }
+
+  // Testimonials
+  async getTestimonials(): Promise<Testimonial[]> {
+    return await db.select().from(testimonials);
+  }
+
+  async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
+    const [newTestimonial] = await db.insert(testimonials).values(testimonial).returning();
+    return newTestimonial;
+  }
+
+  async updateTestimonial(id: number, testimonial: Partial<InsertTestimonial>): Promise<Testimonial> {
+    const [updated] = await db.update(testimonials)
+      .set(testimonial)
+      .where({ id: id })
+      .returning();
+    return updated;
+  }
+
+  // Pricing plans
+  async getPricingPlans(): Promise<PricingPlan[]> {
+    return await db.select().from(pricingPlans);
+  }
+
+  async createPricingPlan(plan: InsertPricingPlan): Promise<PricingPlan> {
+    const [newPlan] = await db.insert(pricingPlans).values(plan).returning();
+    return newPlan;
+  }
+
+  async updatePricingPlan(id: number, plan: Partial<InsertPricingPlan>): Promise<PricingPlan> {
+    const [updated] = await db.update(pricingPlans)
+      .set(plan)
+      .where({ id: id })
+      .returning();
+    return updated;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new PostgresStorage();

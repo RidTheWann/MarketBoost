@@ -1,7 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import type { HeroContent } from "@shared/schema";
 
 export default function Hero() {
+  const { data: heroContent } = useQuery<HeroContent>({
+    queryKey: ["/api/cms/hero"],
+  });
+
+  const defaultContent = {
+    heading: "Create beautiful websites without code",
+    subheading: "Build, launch, and grow your business online with our powerful platform. Join thousands of successful companies who trust us.",
+    primaryButtonText: "Start Building Free",
+    secondaryButtonText: "Watch Demo"
+  };
+
+  const content = heroContent || defaultContent;
+
   return (
     <section className="pt-32 pb-24 overflow-hidden">
       <div className="container mx-auto px-4">
@@ -18,24 +33,27 @@ export default function Hero() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Create beautiful
-              <span className="relative inline-block mx-2">
-                <span className="relative z-10 bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
-                  websites
-                </span>
-                <motion.span
-                  className="absolute bottom-2 left-0 w-full h-3 bg-primary/20 -z-10"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                />
-              </span>
-              without code
+              {content.heading.split(' ').map((word, index, array) => (
+                index === array.indexOf('websites') ? (
+                  <span key={index} className="relative inline-block mx-2">
+                    <span className="relative z-10 bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
+                      {word}
+                    </span>
+                    <motion.span
+                      className="absolute bottom-2 left-0 w-full h-3 bg-primary/20 -z-10"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ delay: 0.5, duration: 0.6 }}
+                    />
+                  </span>
+                ) : (
+                  <span key={index}> {word}</span>
+                )
+              ))}
             </h1>
 
             <p className="text-lg text-muted-foreground mb-8 md:pr-12">
-              Build, launch, and grow your business online with our powerful platform. 
-              Join thousands of successful companies who trust us.
+              {content.subheading}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -43,14 +61,14 @@ export default function Hero() {
                 size="lg" 
                 className="bg-gradient-to-r from-primary to-blue-400 hover:from-primary/90 hover:to-blue-400/90 text-white px-8 h-12 rounded-full shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all"
               >
-                Start Building Free
+                {content.primaryButtonText}
               </Button>
               <Button 
                 size="lg" 
                 variant="outline"
                 className="border-2 border-primary/20 hover:bg-primary/5 h-12 rounded-full"
               >
-                Watch Demo
+                {content.secondaryButtonText}
               </Button>
             </div>
 
