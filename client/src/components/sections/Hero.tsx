@@ -29,7 +29,7 @@ export default function Hero() {
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               Create beautiful
               <span className="relative inline-block mx-2">
-                <span className="relative z-10 bg-gradient-to-r from-primary via-blue-500 to-primary bg-clip-text text-transparent">
+                <span className="relative z-10 bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
                   websites
                 </span>
                 <motion.span
@@ -50,7 +50,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="bg-primary hover:bg-primary/90 text-white px-8 h-12 rounded-full shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all"
+                className="bg-gradient-to-r from-primary to-blue-400 hover:from-primary/90 hover:to-blue-400/90 text-white px-8 h-12 rounded-full shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all"
               >
                 Start Building Free
               </Button>
