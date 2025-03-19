@@ -15,6 +15,7 @@ const sidebarItems = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
+  const currentPath = location || '/admin';
 
   return (
     <Layout>
@@ -31,7 +32,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <ScrollArea className="flex-1 p-4">
             <nav className="grid gap-2">
               {sidebarItems.map((item) => {
-                const isActive = location.startsWith(item.href);
+                const isActive = currentPath.startsWith(item.href);
                 return (
                   <Button
                     key={item.href}
@@ -54,7 +55,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <LayoutHeader className="border-b">
           <div className="flex h-16 items-center px-6">
             <h1 className="text-lg font-semibold">
-              {sidebarItems.find((item) => location.startsWith(item.href))?.label || "Dashboard"}
+              {sidebarItems.find((item) => currentPath.startsWith(item.href))?.label || "Dashboard"}
             </h1>
           </div>
         </LayoutHeader>
