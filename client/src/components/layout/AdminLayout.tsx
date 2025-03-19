@@ -14,12 +14,8 @@ const sidebarItems = [
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const [location, navigate] = useLocation();
+  const [location] = useLocation();
   const currentPath = location || '/admin';
-
-  const handleNavigation = (href: string) => {
-    navigate(href);
-  };
 
   return (
     <Layout>
@@ -40,7 +36,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 return (
                   <Button
                     key={item.href}
-                    onClick={() => handleNavigation(item.href)}
                     variant={isActive ? "secondary" : "ghost"}
                     className="w-full justify-start gap-2"
                     asChild
