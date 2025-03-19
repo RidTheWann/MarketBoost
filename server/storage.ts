@@ -42,7 +42,17 @@ import { WebSocket } from 'ws';
 // @ts-ignore
 global.WebSocket = WebSocket;
 
-const pool = new Pool({ connectionString });
+const pool = new Pool({ 
+  connectionString,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  connectionTimeoutMillis: 5000
+});
+
+// Test connection
+pool.connect()
+  .then(() => console.log('Database connected successfully'))
+  .catch(err => console.error('Database connection error:', err));
+
 const db = drizzle(pool);
 
 export class PostgresStorage implements IStorage {
