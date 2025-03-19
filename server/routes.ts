@@ -28,12 +28,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/cms/hero", async (_req: Request, res: Response) => {
     try {
       const content = await storage.getActiveHeroContent();
-      if (!content) {
-        return res.json(null);
-      }
       res.json(content);
     } catch (error) {
-      console.error("Error fetching hero content:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });

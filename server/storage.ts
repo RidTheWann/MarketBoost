@@ -33,19 +33,7 @@ export interface IStorage {
   updatePricingPlan(id: number, plan: Partial<InsertPricingPlan>): Promise<PricingPlan>;
 }
 
-const connectionString = process.env.DATABASE_URL;
-if (!connectionString) {
-  throw new Error("DATABASE_URL environment variable is not set");
-}
-
-const pool = new Pool({ 
-  connectionString,
-  connectionTimeoutMillis: 5000,
-  max: 20,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool);
 
 export class PostgresStorage implements IStorage {
