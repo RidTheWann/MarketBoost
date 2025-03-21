@@ -6,8 +6,6 @@ export default {
   content: [
     "./client/index.html", 
     "./client/src/**/*.{js,jsx,ts,tsx}",
-    "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}",
     path.join(__dirname, "client/src/**/*.{js,jsx,ts,tsx}"),
     path.resolve(__dirname, "client/src/**/*.{js,jsx,ts,tsx}")
   ],
