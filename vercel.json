@@ -13,26 +13,26 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/index.js"
+      "dest": "/dist/index.js"
     },
     {
       "handle": "filesystem"
     },
     {
       "src": "/(.*\\.(js|css|png|jpg|svg|ico))",
-      "dest": "/public/$1"
+      "dest": "/dist/public/$1"
     },
     {
       "src": "/admin(.*)",
-      "dest": "/public/index.html"
+      "dest": "/dist/public/index.html"
     },
     {
       "src": "/docs(.*)",
-      "dest": "/public/index.html"
+      "dest": "/dist/public/index.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index.html"
+      "dest": "/dist/public/index.html"
     }
   ]
 }
