@@ -3,36 +3,40 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "buildCommand": "npm run build",
+        "outputDirectory": "dist"
+      }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/dist/index.js"
+      "dest": "/index.js"
     },
     {
       "handle": "filesystem"
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/dist/public/assets/$1"
+      "dest": "/public/assets/$1"
     },
     {
       "src": "/(.*\\.(js|css|png|jpg|svg|ico))",
-      "dest": "/dist/public/$1"
+      "dest": "/public/$1"
     },
     {
       "src": "/admin(.*)",
-      "dest": "/dist/public/index.html"
+      "dest": "/public/index.html"
     },
     {
       "src": "/docs(.*)",
-      "dest": "/dist/public/index.html"
+      "dest": "/public/index.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/public/index.html"
+      "dest": "/public/index.html"
     }
   ]
 }
