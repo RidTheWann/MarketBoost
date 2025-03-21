@@ -12,11 +12,15 @@
       "dest": "/dist/index.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "/dist/public/$1"
+      "handle": "filesystem"
     },
     {
-      "handle": "filesystem"
+      "src": "/assets/(.*)",
+      "dest": "/dist/public/assets/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|svg|ico))",
+      "dest": "/dist/public/$1"
     },
     {
       "src": "/(.*)",
