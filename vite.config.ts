@@ -41,6 +41,12 @@ export default defineConfig({
       "@shared": path.resolve(__dirname, "shared"),
     },
   },
+  server: {
+    fs: {
+      // Allow serving files from one level up to the project root
+      allow: ['..'],
+    },
+  },
   optimizeDeps: {
     include: []
   },
