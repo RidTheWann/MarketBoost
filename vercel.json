@@ -31,6 +31,10 @@
       "dest": "/dist/public/index.html"
     },
     {
+      "src": "/assets/(.*)",
+      "dest": "/dist/public/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/dist/public/index.html"
     }
