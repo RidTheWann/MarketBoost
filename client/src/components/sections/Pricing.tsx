@@ -65,11 +65,11 @@ export default function Pricing() {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => (
-            <Card key={plan.name} className={plan.popular ? "border-primary" : ""}>
+            <Card key={plan.name} className={plan.isPopular ? "border-primary" : ""}>
               <CardHeader>
                 <CardTitle className="text-xl">
                   {plan.name}
-                  {plan.popular && (
+                  {plan.isPopular && (
                     <span className="ml-2 text-xs bg-primary text-primary-foreground px-2 py-1 rounded-full">
                       Popular
                     </span>
@@ -89,7 +89,7 @@ export default function Pricing() {
                     </li>
                   ))}
                 </ul>
-                <Button className="w-full" variant={plan.popular ? "default" : "outline"}>
+                <Button className="w-full" variant={plan.isPopular ? "default" : "outline"}>
                   Get Started
                 </Button>
               </CardContent>

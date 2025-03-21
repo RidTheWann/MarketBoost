@@ -67,7 +67,7 @@ const initializeMemoryStore = () => {
       name: plan.name,
       price: plan.price,
       features: plan.features,
-      isPopular: plan.isPopular
+      isPopular: plan.isPopular || false
     };
     store.pricingPlans.push(newPlan);
   });
@@ -181,7 +181,8 @@ export class MemoryStorage implements IStorage {
   async createPricingPlan(plan: InsertPricingPlan): Promise<PricingPlan> {
     const newPlan: PricingPlan = {
       id: store.idCounters.pricingPlans++,
-      ...plan
+      ...plan,
+      isPopular: plan.isPopular ?? false
     };
     store.pricingPlans.push(newPlan);
     return newPlan;
