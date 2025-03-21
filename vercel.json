@@ -20,23 +20,23 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/public/assets/$1"
+      "dest": "/assets/$1"
     },
     {
       "src": "/(.*\\.(js|css|png|jpg|svg|ico))",
-      "dest": "/public/$1"
+      "dest": "/$1"
     },
     {
       "src": "/admin(.*)",
-      "dest": "/public/index.html"
+      "dest": "/index.html"
     },
     {
       "src": "/docs(.*)",
-      "dest": "/public/index.html"
+      "dest": "/index.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index.html"
+      "dest": "/index.html"
     }
   ]
 }
