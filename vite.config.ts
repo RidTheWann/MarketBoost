@@ -41,16 +41,24 @@ export default defineConfig({
       "@shared": path.resolve(__dirname, "shared"),
     },
   },
+  optimizeDeps: {
+    include: []
+  },
   root: path.resolve(__dirname, "client"),
   build: {
-    outDir: path.resolve(__dirname, "dist/public"),
-    emptyOutDir: true,
-    assetsDir: ".",
+    commonjsOptions: {
+      include: [/node_modules/],
+      extensions: ['.js', '.cjs', '.jsx', '.tsx', '.ts']
+    },
     rollupOptions: {
+      external: [],
       output: {
         assetFileNames: "[name].[ext]"
       }
     },
+    outDir: path.resolve(__dirname, "dist/public"),
+    emptyOutDir: true,
+    assetsDir: "."
   }
   ,
   base: "/",
