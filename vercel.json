@@ -16,14 +16,14 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/dist/public/assets/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|svg|ico))",
       "dest": "/dist/public/$1"
     },
     {
       "src": "/marketboost/(.*)",
+      "dest": "/dist/public/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|svg|ico))",
       "dest": "/dist/public/$1"
     },
     {
