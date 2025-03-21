@@ -16,24 +16,14 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/dist/public/assets/$1"
+      "dest": "/dist/assets/$1"
     },
-    {
-      "src": "/marketboost/(.*\\.(js|css|png|jpg|svg|ico))",
-      "dest": "/dist/public/$1"
-    },
+
     {
       "src": "/(.*\\.(js|css|png|jpg|svg|ico))",
-      "dest": "/dist/public/$1"
+      "dest": "/dist/$1"
     },
-    {
-      "src": "/marketboost",
-      "dest": "/dist/public/index.html"
-    },
-    {
-      "src": "/marketboost/(.*)",
-      "dest": "/dist/public/index.html"
-    },
+
     {
       "src": "/(.*)",
       "dest": "/dist/public/index.html"

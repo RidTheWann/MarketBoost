@@ -22,6 +22,18 @@ export default defineConfig({
           ),
         ]
       : []),
+    viteStaticCopy({
+      targets: [
+        {
+          src: '../preview.png',
+          dest: '.'
+        },
+        {
+          src: '../cms-*.png',
+          dest: '.'
+        }
+      ]
+    })
   ],
   resolve: {
     alias: {
@@ -39,20 +51,7 @@ export default defineConfig({
         assetFileNames: "[name].[ext]"
       }
     },
-  },
-  plugins: [
-    viteStaticCopy({
-      targets: [
-        {
-          src: '../preview.png',
-          dest: '.'
-        },
-        {
-          src: '../cms-*.png',
-          dest: '.'
-        }
-      ]
-    })
-  ],
-  base: "/marketboost/",
+  }
+  ,
+  base: "/",
 });
