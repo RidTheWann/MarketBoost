@@ -272,16 +272,16 @@ export default function Documentation() {
                         <section className="space-y-3">
                           <h2 className="text-2xl font-semibold">Live Demo</h2>
                           <p>
-                          Access a live demo of MarketBoost via the following link:
-                            <a href="https://demo.code.market/marketboost" 
+                            Access a live demo of MarketBoost via the following link:
+                            <a href="https://marketboost-demo.vercel.app/" 
                                target="_blank" 
                                rel="noopener noreferrer"
                                className="text-primary font-medium ml-2">
-                              https://demo.code.market/marketboost
+                              https://marketboost-demo.vercel.app/
                             </a>
                           </p>
                           <p className="text-muted-foreground">
-                          The demo includes features:
+                            The demo includes features:
                             <ul className="list-disc pl-6 space-y-2 mt-2">
                               <li>Main page with full navigation</li>
                               <li>CMS dashboard with demo content</li>
@@ -289,29 +289,16 @@ export default function Documentation() {
                               <li>Interactive pricing page</li>
                             </ul>
                           </p>
-                        </section>
-                        <section className="space-y-3">
-                          <h2 className="text-2xl font-semibold">Live Demo</h2>
-                          <p>Demo live tersedia di: <a href="https://marketboost.vercel.app/" className="text-primary underline" target="_blank" rel="noopener noreferrer">https://marketboost.vercel.app/</a></p>
-                          <div className="mt-4 aspect-video rounded-lg border">
+                          <div className="mt-6 aspect-video rounded-lg border">
                             <iframe 
                               className="h-full w-full rounded-md"
-                              src="https://marketboost.vercel.app/"
+                              src="https://marketboost-demo.vercel.app/"
                               title="MarketBoost Demo"
                               allowFullScreen
                             />
                           </div>
                           <p className="text-sm text-muted-foreground mt-4">
-                            *Ganti URL dengan domain Anda sendiri setelah deploy
-                          </p>
-                        </section>
-                        <section className="space-y-3">
-                          <h2 className="text-2xl font-semibold">Live Demonstration</h2>
-                          <p>
-                            Access live demo at: 
-                            <a href="https://marketboost-demo.com" className="text-primary underline" target="_blank" rel="noopener noreferrer">
-                              https://marketboost-demo.com
-                            </a>
+                            *Replace URL with your own domain after deployment
                           </p>
                         </section>
                       </div>

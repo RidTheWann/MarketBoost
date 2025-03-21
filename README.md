@@ -157,8 +157,8 @@ The template is fully responsive with specific optimizations for:
 
 ## 🔗 Resources
 
-- [Live Demo](https://marketboost.app)
-- [Documentation](https://marketboost.app/docs)
+- [Live Demo](https://marketboost-demo.vercel.app/)
+- [Documentation](https://marketboost-demo.vercel.app/docs)
 - [Support](https://saweria.co/ridwangatro21)
 
 ## 📄 License
