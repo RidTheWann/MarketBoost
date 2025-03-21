@@ -46,19 +46,20 @@ export default defineConfig({
   },
   root: path.resolve(__dirname, "client"),
   build: {
+    outDir: path.resolve(__dirname, "dist/public"),
+    emptyOutDir: true,
+    assetsDir: ".",
     commonjsOptions: {
       include: [/node_modules/],
       extensions: ['.js', '.cjs', '.jsx', '.tsx', '.ts']
     },
     rollupOptions: {
+      input: path.resolve(__dirname, "client", "index.html"),
       external: [],
       output: {
         assetFileNames: "[name].[ext]"
       }
-    },
-    outDir: path.resolve(__dirname, "dist/public"),
-    emptyOutDir: true,
-    assetsDir: "."
+    }
   }
   ,
   base: "/",
