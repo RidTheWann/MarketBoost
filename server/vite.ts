@@ -42,7 +42,7 @@ export async function setupVite(app: Express, server: Server) {
     server: {
       middlewareMode: serverOptions.middlewareMode,
       hmr: serverOptions.hmr,
-      host: "127.0.0.1" // Windows-compatible host configuration
+      host: process.env.NODE_ENV === "production" ? "0.0.0.0" : "127.0.0.1" // Adjust host based on environment
     },
     appType: "custom",
   });
