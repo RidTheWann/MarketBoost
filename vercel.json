@@ -16,15 +16,23 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/dist/public/$1"
+      "dest": "/dist/public/assets/$1"
     },
     {
-      "src": "/marketboost/(.*)",
+      "src": "/marketboost/(.*\\.(js|css|png|jpg|svg|ico))",
       "dest": "/dist/public/$1"
     },
     {
       "src": "/(.*\\.(js|css|png|jpg|svg|ico))",
       "dest": "/dist/public/$1"
+    },
+    {
+      "src": "/marketboost",
+      "dest": "/dist/public/index.html"
+    },
+    {
+      "src": "/marketboost/(.*)",
+      "dest": "/dist/public/index.html"
     },
     {
       "src": "/(.*)",
