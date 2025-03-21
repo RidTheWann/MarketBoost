@@ -23,6 +23,14 @@
       "dest": "/dist/public/$1"
     },
     {
+      "src": "/admin(.*)",
+      "dest": "/dist/public/index.html"
+    },
+    {
+      "src": "/docs(.*)",
+      "dest": "/dist/public/index.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/dist/public/index.html"
     }
