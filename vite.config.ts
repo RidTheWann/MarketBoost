@@ -25,11 +25,11 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: '../preview.png',
+          src: path.resolve(__dirname, 'preview.png'),
           dest: '.'
         },
         {
-          src: '../cms-*.png',
+          src: path.resolve(__dirname, 'cms-*.png'),
           dest: '.'
         }
       ]
