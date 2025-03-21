@@ -1,8 +1,11 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import type { PricingPlan } from "@shared/schema";
 
-const plans = [
+// Fallback plans if API fails
+const fallbackPlans = [
   {
     name: "Starter",
     price: "49",
@@ -11,19 +14,20 @@ const plans = [
       "Up to 5 team members",
       "2GB storage",
       "Basic support"
-    ]
+    ],
+    isPopular: false
   },
   {
     name: "Professional",
     price: "99",
-    popular: true,
     features: [
       "Advanced features",
       "Up to 20 team members",
       "10GB storage",
       "Priority support",
       "Advanced analytics"
-    ]
+    ],
+    isPopular: true
   },
   {
     name: "Enterprise",
@@ -35,11 +39,20 @@ const plans = [
       "24/7 premium support",
       "Custom solutions",
       "API access"
-    ]
+    ],
+    isPopular: false
   }
 ];
 
 export default function Pricing() {
+  // Fetch pricing plans from API
+  const { data: apiPlans, isLoading } = useQuery<PricingPlan[]>({  
+    queryKey: ["/api/cms/pricing"],
+  });
+  
+  // Use API data if available, otherwise use fallback plans
+  const plans = apiPlans || fallbackPlans;
+  
   return (
     <section id="pricing" className="py-24 bg-muted/50">
       <div className="container mx-auto px-4">

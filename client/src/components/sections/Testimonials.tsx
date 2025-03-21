@@ -1,8 +1,11 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useQuery } from "@tanstack/react-query";
+import type { Testimonial } from "@shared/schema";
 
-const testimonials = [
+// Fallback testimonials if API fails
+const fallbackTestimonials = [
   {
     name: "Sarah Johnson",
     role: "CEO at TechCorp",
@@ -24,6 +27,13 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  // Fetch testimonials from API
+  const { data: apiTestimonials, isLoading } = useQuery<Testimonial[]>({
+    queryKey: ["/api/cms/testimonials"],
+  });
+  
+  // Use API data if available, otherwise use fallback testimonials
+  const testimonials = apiTestimonials || fallbackTestimonials;
   return (
     <section id="testimonials" className="py-24">
       <div className="container mx-auto px-4">

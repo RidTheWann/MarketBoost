@@ -2,10 +2,47 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
+// Simple in-memory rate limiter
+const rateLimiter = {
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  maxRequests: 100, // limit each IP to 100 requests per windowMs
+  ipRequests: new Map<string, { count: number, resetTime: number }>(),
+  
+  // Check if request should be limited
+  limit(ip: string): boolean {
+    const now = Date.now();
+    const record = this.ipRequests.get(ip) || { count: 0, resetTime: now + this.windowMs };
+    
+    // Reset counter if window expired
+    if (now > record.resetTime) {
+      record.count = 0;
+      record.resetTime = now + this.windowMs;
+    }
+    
+    // Increment counter
+    record.count++;
+    this.ipRequests.set(ip, record);
+    
+    return record.count > this.maxRequests;
+  }
+};
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Rate limiting middleware for API routes
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    const ip = req.ip || req.socket.remoteAddress || 'unknown';
+    if (rateLimiter.limit(ip)) {
+      return res.status(429).json({ message: 'Too many requests, please try again later.' });
+    }
+  }
+  next();
+});
+
+// Logging middleware
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -59,12 +96,9 @@ app.use((req, res, next) => {
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
+  const host = "localhost";
+  const port = 3001;
+  server.listen(port, "127.0.0.1", () => {
     log(`serving on port ${port}`);
   });
 })();

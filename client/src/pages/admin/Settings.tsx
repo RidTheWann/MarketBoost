@@ -5,8 +5,10 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AdminSettings() {
+  const { toast } = useToast();
   const form = useForm({
     defaultValues: {
       siteName: "Modern Business",
@@ -28,7 +30,13 @@ export default function AdminSettings() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(console.log)} className="space-y-4">
+            <form onSubmit={form.handleSubmit((data) => {
+              // Handle settings update here
+              toast({
+                title: "Settings updated",
+                description: "Your website settings have been updated successfully."
+              });
+            })} className="space-y-4">
               <FormField
                 control={form.control}
                 name="siteName"

@@ -1,4 +1,5 @@
 import { pgTable, text, serial, integer, boolean } from "drizzle-orm/pg-core";
+import { eq } from "drizzle-orm";
 import { drizzle } from 'drizzle-orm/neon-serverless';
 import { Pool } from '@neondatabase/serverless';
 import { 
@@ -33,18 +34,27 @@ export interface IStorage {
   updatePricingPlan(id: number, plan: Partial<InsertPricingPlan>): Promise<PricingPlan>;
 }
 
+// Get database connection string or use in-memory storage if not available
 const connectionString = process.env.DATABASE_URL;
-if (!connectionString) {
-  throw new Error('DATABASE_URL environment variable is required');
+let pool;
+let db;
+
+if (connectionString) {
+  pool = new Pool({
+    connectionString,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  });
+  db = drizzle(pool);
+  console.log('Using PostgreSQL database');
+} else {
+  console.log('DATABASE_URL not provided, using in-memory storage for demonstration');
+  // In-memory storage will be used instead
 }
 
-const pool = new Pool({
-  connectionString,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-const db = drizzle(pool);
+// Import memory storage implementation
+import { MemoryStorage } from "./memory-storage";
 
 export class PostgresStorage implements IStorage {
   constructor() {
@@ -61,7 +71,7 @@ export class PostgresStorage implements IStorage {
 
   // Hero content
   async getActiveHeroContent(): Promise<HeroContent | undefined> {
-    const [content] = await db.select().from(heroContent).where({ isActive: true });
+    const [content] = await db.select().from(heroContent).where(eq(heroContent.isActive, true));
     return content;
   }
 
@@ -75,7 +85,7 @@ export class PostgresStorage implements IStorage {
   async updateHeroContent(id: number, content: Partial<InsertHeroContent>): Promise<HeroContent> {
     const [updated] = await db.update(heroContent)
       .set(content)
-      .where({ id: id })
+      .where(eq(heroContent.id, id))
       .returning();
     return updated;
   }
@@ -93,7 +103,7 @@ export class PostgresStorage implements IStorage {
   async updateFeature(id: number, feature: Partial<InsertFeature>): Promise<Feature> {
     const [updated] = await db.update(features)
       .set(feature)
-      .where({ id: id })
+      .where(eq(features.id, id))
       .returning();
     return updated;
   }
@@ -111,7 +121,7 @@ export class PostgresStorage implements IStorage {
   async updateTestimonial(id: number, testimonial: Partial<InsertTestimonial>): Promise<Testimonial> {
     const [updated] = await db.update(testimonials)
       .set(testimonial)
-      .where({ id: id })
+      .where(eq(testimonials.id, id))
       .returning();
     return updated;
   }
@@ -129,10 +139,11 @@ export class PostgresStorage implements IStorage {
   async updatePricingPlan(id: number, plan: Partial<InsertPricingPlan>): Promise<PricingPlan> {
     const [updated] = await db.update(pricingPlans)
       .set(plan)
-      .where({ id: id })
+      .where(eq(pricingPlans.id, id))
       .returning();
     return updated;
   }
 }
 
-export const storage = new PostgresStorage();
+// Export the appropriate storage implementation
+export const storage = connectionString ? new PostgresStorage() : new MemoryStorage();

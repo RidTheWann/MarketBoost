@@ -4,17 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { motion } from "framer-motion";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "@/hooks/use-language";
 
 const navItems = [
-  { label: "Features", href: "#features" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" }
+  { key: "nav.features", href: "#features" },
+  { key: "nav.testimonials", href: "#testimonials" },
+  { key: "nav.pricing", href: "#pricing" },
+  { key: "nav.contact", href: "#contact" }
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,15 +55,16 @@ export default function Navbar() {
                 href={item.href}
                 className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
               >
-                {item.label}
+                {t(item.key)}
               </a>
             ))}
             <Button
               size="sm"
               className="bg-primary/10 text-primary hover:bg-primary/20 rounded-full px-6"
             >
-              Get Started
+              {t('nav.getStarted')}
             </Button>
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile Navigation */}
@@ -79,12 +83,15 @@ export default function Navbar() {
                     className="text-lg font-medium hover:text-primary transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
-                    {item.label}
+                    {t(item.key)}
                   </a>
                 ))}
                 <Button className="mt-4 w-full rounded-full">
-                  Get Started
+                  {t('nav.getStarted')}
                 </Button>
+                <div className="mt-4 flex justify-center">
+                  <LanguageSwitcher />
+                </div>
               </div>
             </SheetContent>
           </Sheet>

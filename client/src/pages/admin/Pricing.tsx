@@ -97,8 +97,8 @@ export default function AdminPricing() {
                   <FormItem>
                     <FormLabel>Features (one per line)</FormLabel>
                     <FormControl>
-                      <Input
-                        as="textarea"
+                      <textarea
+                        className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         placeholder="Enter features, one per line"
                         value={field.value.join('\n')}
                         onChange={(e) => field.onChange(e.target.value.split('\n'))}

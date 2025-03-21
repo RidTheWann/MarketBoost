@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import themePlugin from "@replit/vite-plugin-shadcn-theme-json";
 import path, { dirname } from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,5 +33,26 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
+    assetsDir: ".",
+    rollupOptions: {
+      output: {
+        assetFileNames: "[name].[ext]"
+      }
+    },
   },
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          src: '../preview.png',
+          dest: '.'
+        },
+        {
+          src: '../cms-*.png',
+          dest: '.'
+        }
+      ]
+    })
+  ],
+  base: "/marketboost/",
 });

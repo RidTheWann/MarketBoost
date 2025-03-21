@@ -6,8 +6,54 @@ import {
   insertTestimonialSchema, insertPricingPlanSchema
 } from "@shared/schema";
 import { z } from "zod";
+import { demoHeroContent, demoFeatures, demoTestimonials, demoPricingPlans } from "./demo-data";
+
+// Function to initialize demo data if database is empty
+async function initializeDemoData() {
+  try {
+    // Check if hero content exists
+    const heroContent = await storage.getActiveHeroContent();
+    if (!heroContent) {
+      console.log('Initializing demo hero content...');
+      await storage.createHeroContent(demoHeroContent);
+    }
+
+    // Check if features exist
+    const features = await storage.getFeatures();
+    if (features.length === 0) {
+      console.log('Initializing demo features...');
+      for (const feature of demoFeatures) {
+        await storage.createFeature(feature);
+      }
+    }
+
+    // Check if testimonials exist
+    const testimonials = await storage.getTestimonials();
+    if (testimonials.length === 0) {
+      console.log('Initializing demo testimonials...');
+      for (const testimonial of demoTestimonials) {
+        await storage.createTestimonial(testimonial);
+      }
+    }
+
+    // Check if pricing plans exist
+    const pricingPlans = await storage.getPricingPlans();
+    if (pricingPlans.length === 0) {
+      console.log('Initializing demo pricing plans...');
+      for (const plan of demoPricingPlans) {
+        await storage.createPricingPlan(plan);
+      }
+    }
+
+    console.log('Demo data initialization complete!');
+  } catch (error) {
+    console.error('Error initializing demo data:', error);
+  }
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Initialize demo data
+  await initializeDemoData();
   // Contact form
   app.post("/api/contact", async (req: Request, res: Response) => {
     try {
