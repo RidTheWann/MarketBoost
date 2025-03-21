@@ -16,14 +16,12 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/dist/assets/$1"
+      "dest": "/dist/public/assets/$1"
     },
-
     {
       "src": "/(.*\\.(js|css|png|jpg|svg|ico))",
-      "dest": "/dist/$1"
+      "dest": "/dist/public/$1"
     },
-
     {
       "src": "/(.*)",
       "dest": "/dist/public/index.html"
