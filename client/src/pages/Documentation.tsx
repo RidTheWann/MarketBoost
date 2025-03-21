@@ -117,7 +117,7 @@ export default function Documentation() {
                             <li>
                               Clone the repository:
                               <pre className="bg-muted p-4 rounded-md mt-2">
-                                <code>git clone https://github.com/yourusername/marketboost.git</code>
+                                <code>git clone https://github.com/username/marketboost.git</code>
                               </pre>
                             </li>
                             <li>
